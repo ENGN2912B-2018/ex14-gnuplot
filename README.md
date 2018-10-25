@@ -1,6 +1,6 @@
 # Gnuplot graphics plotting utility
 
-Gnuplot is a powerful plotting utility for 2D and 3D graphics.  Many of the typcial plots found in MATLAB can be replicated using Gnuplot.  By itself, however, Gnuplot is a standalone program and cannot interface directly with a C++ program.
+Gnuplot is a powerful plotting utility for 2D and 3D graphics.  Many typical plot types available in MATLAB or Python can be replicated using Gnuplot.  By itself, however, Gnuplot is a standalone program and cannot interface directly with a C++ program.
 
 ## Gnuplot-iostream interface library
 
@@ -10,5 +10,6 @@ The iostream interface uses the `<<` operator to pass data and commands directly
 
 ## Compiling programs with the Gnuplot-iostream interface
 
-Gnuplot-iostream uses Boost and therefore requires including the Boost.Iostreams library.
+To build a program that includes this support, simply copy the "gnuplot-iostream.h" file from the project's GitHub repository.  Place this file in your directory and make sure that it can be found by the compiler.  If you place the file in a separate folder, you will need to include this directory.
 
+Gnuplot-iostream uses Boost and therefore requires including Boost's iostreams, filesystem, and system libraries.  Using the instructions from the examples in [ex14-boost](https://github.com/ENGN2912B-2018/ex14-boost), you should be able to compile the program.
