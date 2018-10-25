@@ -12,9 +12,14 @@ find_package(Boost 1.45.0 COMPONENTS iostreams system filesystem)
 
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
+	
     add_executable(ex1 src/example1.cpp)
     target_link_libraries(ex1 ${Boost_LIBRARIES})
     target_include_directories(ex1 PUBLIC lib)
+
+    add_executable(ex2 src/example2.cpp)
+    target_link_libraries(ex2 ${Boost_LIBRARIES})
+    target_include_directories(ex2 PUBLIC lib)
 endif()
 
 #include_directories(src)

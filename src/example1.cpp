@@ -1,19 +1,15 @@
-// Demo of vector plot.
-// Compile it with:
-//   g++ -o example-vector example-vector.cc -lboost_iostreams -lboost_system -lboost_filesystem
-
 #include <iostream>
 #include <vector>
 #include <cmath>
 #include <boost/tuple/tuple.hpp>
 #include <boost/tuple/tuple_io.hpp>
 
-// #include "gnuplot-iostream.h"
+#include "gnuplot-iostream.h"
 
 using namespace std;
 
 int main() {
-	// Gnuplot gp;
+	Gnuplot gp;
 	// Create a script which can be manually fed into gnuplot later:
 	//    Gnuplot gp(">script.gp");
 	// Create script and also feed to gnuplot:
@@ -23,7 +19,6 @@ int main() {
 
 	// Gnuplot vectors (i.e. arrows) require four columns: (x,y,dx,dy)
 	std::vector<boost::tuple<double, double, double, double> > pts_A;
-    std::vector<boost::tuple<double, double, double, double> > pts_B;
 
 	// You can also use a separate container for each column, like so:
 	std::vector<double> pts_B_x;
@@ -53,24 +48,20 @@ int main() {
 		pts_B_dx.push_back( sin(theta)*0.1);
 		pts_B_dy.push_back(-cos(theta)*0.1);
 	}
-    boost::make_tuple(pts_B_x, pts_B_y, pts_B_dx, pts_B_dy);
+    
 
 	// Don't forget to put "\n" at the end of each line!
-	cout << "set xrange [-2:2]\nset yrange [-2:2]\n";
+	gp << "set xrange [-2:2]\nset yrange [-2:2]\n";
 	// '-' means read from stdin.  The send1d() function sends data to gnuplot's stdin.
-	cout << "plot '-' with vectors title 'pts_A', '-' with vectors title 'pts_B'\n";
+	gp << "plot '-' with vectors title 'pts_A', '-' with vectors title 'pts_B'\n";
 
-    for (auto pA : pts_A) {
-        cout << pA << endl;
+    /*for (auto pA : pts_A) {
+       	gp << pA << endl;
     }
     for (auto pB : pts_B) {
-        cout << pB << endl;
-    }
+        gp << pB << endl;
+    }*/
+	gp.send1d(pts_A);
+	gp.send1d(boost::make_tuple(pts_B_x, pts_B_y, pts_B_dx, pts_B_dy));
 
-#ifdef _WIN32
-	// For Windows, prompt for a keystroke before the Gnuplot object goes out of scope so that
-	// the gnuplot window doesn't get closed.
-	std::cout << "Press enter to exit." << std::endl;
-	std::cin.get();
-#endif
 }
